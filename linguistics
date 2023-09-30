@@ -5,9 +5,13 @@ if [ ! -f /bin/trans ]; then
 fi
 
 
+function help() {
+    echo "Usage: $0 ru:en [-d wordlist-russian.txt]"
+}
+
 wordlist_file="wordlist.txt"
 
-if [ $# -le 3 ]; then
+if [ $# -gt 0 ] && [ $# -le 3 ]; then
     if [[ $1 =~ ([a-zA-Z]{2}):([a-zA-Z]{2}) ]]; then
         code1="${BASH_REMATCH[1]}"
         code2="${BASH_REMATCH[2]}"
