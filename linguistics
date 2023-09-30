@@ -1,0 +1,29 @@
+#!/bin/bash
+
+if [ ! -f /bin/trans ]; then
+    echo "Install translate-shell"
+fi
+
+
+wordlist_file="wordlist.txt"
+
+if [ $# -le 3 ]; then
+    if [[ $1 =~ ([a-zA-Z]{2}):([a-zA-Z]{2}) ]]; then
+        code1="${BASH_REMATCH[1]}"
+        code2="${BASH_REMATCH[2]}"
+
+        if [[ $2 == "-d" ]] && [ $# -ge 3 ]; then
+            wordlist_file=$3
+        fi
+
+        line_count=`wc -l --total=only ${wordlist_file}`
+        random_number=$((RANDOM % $line_count))
+        random_word=`sed -n ${random_number}p $wordlist_file`
+
+        trans ${code1}:${code2} $random_word
+    else
+        echo "Invalid language code, use \"trans -T\""
+    fi
+else
+    help
+fi
